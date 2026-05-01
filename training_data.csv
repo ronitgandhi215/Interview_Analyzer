@@ -1,0 +1,121 @@
+answer,label
+"I have five years of experience in software development where I led a team to deliver a payment platform that reduced transaction errors by 40 percent. I am passionate about clean architecture and I am confident my background makes me a strong fit for this role.",Excellent
+"I successfully managed a cross-functional project involving marketing engineering and design teams. By creating clear milestones and weekly stand-ups I improved delivery time by 30 percent. The project taught me the importance of stakeholder communication.",Excellent
+"I see myself growing into a leadership role within five years. I plan to deepen my expertise obtain relevant certifications and mentor junior team members. I am excited about the opportunity this company provides to grow both technically and professionally.",Excellent
+"My greatest strength is adaptability. When our company pivoted to remote work I proactively established new communication protocols organised virtual team-building sessions and maintained productivity above our pre-remote baseline.",Excellent
+"I am deeply inspired by your company mission to democratise financial services. Having spent two years building fintech solutions I understand the regulatory and technical challenges you face. I am confident I can contribute immediately to your engineering roadmap.",Excellent
+"I led a team of eight engineers to migrate our entire infrastructure to AWS which reduced operational costs by 35 percent and improved uptime from 98 to 99.9 percent. I coordinated the migration over three months with zero downtime for customers.",Excellent
+"Over the past three years I have developed expertise in machine learning and data engineering. I built a recommendation engine that increased user engagement by 25 percent. I am excited to bring this experience to a company focused on AI-driven products.",Excellent
+"I thrive under pressure. Last quarter I delivered a critical database migration with zero downtime despite a compressed timeline. I prioritise tasks using a triage matrix and communicate blockers early. Stress actually sharpens my focus.",Excellent
+"I have consistently exceeded my sales targets by 20 percent over the last two years by focusing on relationship building and deeply understanding client needs. I believe in a consultative approach and my clients regularly refer new business to me.",Excellent
+"I redesigned our customer onboarding process which reduced time-to-value from 14 days to 3 days. This directly contributed to a 40 percent improvement in 90-day retention. I achieved this by mapping the customer journey and eliminating unnecessary steps.",Excellent
+"I built and deployed three production web applications using React and Node.js. I introduced automated testing which reduced production bugs by 60 percent. I enjoy mentoring junior developers and have led code review sessions weekly for two years.",Excellent
+"I created a data pipeline that processes two million records daily with 99.8 percent accuracy. I optimised query performance which reduced report generation time from 4 hours to 12 minutes. I am passionate about turning raw data into business decisions.",Excellent
+"My leadership philosophy is built on trust and clear communication. I led a 12-person product team through a major rebrand and launched successfully on schedule. I hold weekly one-on-ones with every team member to address blockers early.",Excellent
+"I improved our CI/CD pipeline which reduced deployment time from 2 hours to 15 minutes. I introduced feature flags which allowed us to test with 5 percent of users before full rollout. This reduced rollback incidents by 70 percent.",Excellent
+"I have a proven track record of delivering complex projects on time. In my last role I managed four simultaneous projects worth a combined total of 2 million and delivered all within budget. I use agile methodology and keep stakeholders informed weekly.",Excellent
+"I work well in teams and I have completed several projects during my degree. I enjoy problem solving and I am a quick learner. I think I would be a good fit for this role because I am hardworking and dedicated.",Good
+"I have experience working in customer service where I handled complaints and resolved issues for clients. I am good at communicating and I work well under pressure. I have always met my targets and I get along well with colleagues.",Good
+"In my previous job I was responsible for managing social media accounts and creating content. I grew the Instagram following by 2000 followers over six months. I enjoy creative work and I am comfortable using tools like Canva and Adobe Premiere.",Good
+"I studied computer science and during my final year I built a web application for my thesis project. I used Python and Flask and I learned a lot about backend development. I am now looking to apply those skills in a professional environment.",Good
+"I have been working in finance for three years handling accounts payable and receivable. I am detail oriented and accurate. I reduced invoice processing errors by 15 percent in my last role by introducing a double-check system.",Good
+"I enjoy working with people and I am comfortable in both team and solo environments. I have managed small projects before and I understand deadlines. I believe communication is the most important skill in any workplace.",Good
+"I have intermediate skills in Python and I have completed several online courses in data science. I built a few personal projects including a sentiment analyser and a movie recommendation system. I am keen to learn more and grow in a data role.",Good
+"I contributed to a product launch in my last job where I was responsible for writing user documentation and test cases. I found and reported 23 bugs before launch. I am thorough in my work and I take quality seriously.",Good
+"I managed a small team of three people in a retail environment. I handled scheduling conflict resolution and performance reviews. The store consistently met its monthly targets during my time as supervisor.",Good
+"I have experience in graphic design and I have worked with clients to deliver brand identities and marketing materials. I listen carefully to briefs and I ask questions before starting work to make sure I understand what the client needs.",Good
+"I worked as a teaching assistant for two years where I supported students with assignments and exam preparation. I am patient and clear in my explanations. I believe every student can succeed with the right support.",Good
+"I completed an internship at a marketing agency where I helped run email campaigns and analyse performance data. I learned how to use Mailchimp and Google Analytics. The campaigns I contributed to achieved an average open rate of 28 percent.",Good
+"I have a background in logistics and I managed inventory for a warehouse with over 5000 SKUs. I introduced a barcode scanning system that reduced picking errors by 20 percent. I am organised and systematic in my approach.",Good
+"I enjoy solving technical problems and I have a habit of documenting solutions so my team can learn from them. In my last role I created an internal wiki that the team now uses daily. I believe knowledge sharing makes teams stronger.",Good
+"I have worked in healthcare administration for four years managing patient records and coordinating between departments. I introduced a digital filing system that reduced retrieval time by 40 percent and improved compliance with data regulations.",Good
+"I did some freelance web development work and built websites for small businesses. I am comfortable with HTML CSS and JavaScript. I completed the projects on time and my clients were happy with the results.",Average
+"I think I am a good communicator and I work hard. I have done some projects at university and I feel I am ready for a professional role. I am still learning but I pick things up quickly.",Average
+"I have basic experience in data entry and I am familiar with Microsoft Office. I am reliable and punctual. I am looking for an opportunity to grow my skills in a professional environment.",Average
+"I have worked in retail before and I know how to deal with customers. It can be stressful sometimes but I manage. I think the skills transfer well to other customer-facing roles.",Average
+"I did an internship last summer where I helped with various tasks in the office. I answered emails assisted with scheduling and helped organise files. I got good feedback from my manager.",Average
+"I have some experience with Python but I am still learning. I completed a few tutorials and I built a simple calculator app. I want to improve my skills and this job seems like a good opportunity.",Average
+"I am a team player and I try to contribute wherever I can. I have been part of group projects before and I always do my share. I think I would fit in well with your team.",Average
+"I have experience in sales and I have met my targets most of the time. There were some months I fell short but I always tried to learn from it. I believe I can do better with the right support.",Average
+"I helped my previous employer set up a new filing system for their documents. It took a few weeks but it improved things for the whole office. I am organised and I like having systems in place.",Average
+"I studied business administration and I covered topics like marketing finance and management. I did well in most of my subjects. I am now looking to apply what I learned in a real job.",Average
+"I have done some volunteer work at a local NGO where I helped with events and fundraising. I enjoyed it and I think it taught me a lot about working with different people.",Average
+"I know how to use Excel and I have used it for basic calculations and tracking. I am not an expert but I learn fast. I would like to develop my Excel skills further.",Average
+"I have worked part-time while studying which taught me to manage my time. It was sometimes difficult but I managed to complete my degree and keep my job. I think that shows I can handle pressure.",Average
+"I have a general interest in technology and I keep up with news in the industry. I have not worked in tech before but I am eager to start. I believe my enthusiasm makes up for my lack of experience.",Average
+"I have dealt with difficult customers before and I know how to stay calm. It is not always easy but I try to listen and find a solution. I think patience is one of my stronger qualities.",Average
+"Um I think I am like a pretty good worker you know. I basically try my best and maybe I could be a leader someday sort of. I am not really sure what my biggest strength is I guess.",Poor
+"I failed a big project because my manager was terrible and the team never listened. It was awful and I struggled the whole time. I hated working there and eventually quit because it was impossible to succeed.",Poor
+"I think maybe I can do this job. I have done some similar things before but I am not totally sure. I guess I could try if given the chance. Hopefully it works out.",Poor
+"I do not really have much experience in this area. I am still figuring things out to be honest. I am not sure if I am the best person for this but I need a job.",Poor
+"To be honest I left my last job because my boss was unfair and the environment was toxic. I did not get along with most of my colleagues. I am hoping this place is better.",Poor
+"Um yeah so I have worked a few places before and stuff. Like I did some things there and it was okay I guess. You know it was not amazing but it was fine.",Poor
+"I am not sure how to answer this. I have not really thought about where I see myself in five years. I just want to find something that pays well and is not too stressful.",Poor
+"I have done some work before. Nothing major. I just did what I was told and tried not to cause problems. I am looking for something easy and stable.",Poor
+"I do not really like working in teams to be honest. I prefer to work alone. I find group projects frustrating because people do not always pull their weight.",Poor
+"I kind of just fell into my last job and it was okay for a while but then I got bored. I left because there was no growth and the pay was not great. Not sure what I want to do next.",Poor
+"I struggle with deadlines sometimes. I try my best but things come up and it is hard to stay on top of everything. I hope to improve that about myself.",Poor
+"I do not have much to say about leadership. I have never really been in a leadership role. I am more of a follower I think. I am okay with that.",Poor
+"I have done various jobs here and there. Nothing that stands out. I am a hard worker when I feel motivated but I admit motivation can be an issue sometimes.",Poor
+"To be honest I just need a job right now. I am not particularly passionate about this industry but I figured I would apply and see what happens.",Poor
+"I built a machine learning pipeline that automated feature engineering and reduced model training time by 50 percent. I have published two research papers on natural language processing and I regularly contribute to open source projects.",Excellent
+"I designed and implemented a microservices architecture that handled 10 million requests per day with 99.99 percent uptime. I led a team of six and introduced a documentation culture that reduced onboarding time from 3 weeks to 4 days.",Excellent
+"I have strong analytical skills developed over four years as a data analyst. I built dashboards that gave the executive team real-time visibility into KPIs for the first time. This directly influenced three major strategic decisions last year.",Excellent
+"I overhauled the customer support process by introducing a tiered ticket system and self-service knowledge base. This reduced average resolution time from 48 hours to 6 hours and increased CSAT score from 72 to 91.",Excellent
+"I introduced agile practices to a team that had never used them before. Within two sprints we doubled our velocity and reduced the number of production incidents by 40 percent. I believe process improvement is a continuous responsibility.",Excellent
+"I have a solid foundation in accounting and I obtained my CPA last year. I identified a tax optimisation strategy that saved my previous employer 80000 annually. I am detail-oriented and I take ownership of my work.",Good
+"I worked as a project coordinator for two years and I am comfortable managing timelines budgets and stakeholders. I am certified in PMP and I have successfully delivered 12 projects in the past year.",Good
+"I have experience in UX research and I have conducted user interviews and usability tests for three product teams. My research directly led to a redesign that improved conversion by 18 percent.",Good
+"I enjoy public speaking and I have presented to audiences of up to 200 people. I believe clear communication is essential in any role and I work hard to make complex ideas accessible to non-technical audiences.",Good
+"I have experience managing social media for a brand with 100000 followers. I developed a content calendar and grew organic reach by 35 percent in six months by focusing on educational and behind-the-scenes content.",Good
+"I completed several certifications in cloud computing including AWS Solutions Architect. I have hands-on experience deploying and managing cloud infrastructure. I am excited about moving into a full-time cloud engineering role.",Good
+"I am a recent graduate with a degree in mechanical engineering. I completed a six-month internship at a manufacturing company where I contributed to a process improvement that reduced waste by 12 percent.",Good
+"I have experience in content writing and SEO. I have written over 300 articles and I understand how to research keywords and optimise content for search. My articles have generated over 500000 organic visits.",Good
+"I worked in a startup environment for two years which taught me to be adaptable and resourceful. I wore many hats including product operations and customer success. I thrive in fast-moving environments.",Good
+"I managed a budget of 500000 for a marketing department and consistently delivered campaigns under budget. I am analytical about spend and I track ROI on every initiative.",Good
+"I have done some projects in Python but I mostly followed tutorials. I have not really built anything on my own yet. I am hoping to get more experience.",Average
+"I am interested in data science and I have taken a few online courses. I have not used these skills professionally yet but I think I am ready to start.",Average
+"I helped with some research during my degree and I have basic skills in literature review and data collection. I am organised and I pay attention to detail.",Average
+"I have worked in hospitality for three years and I understand the importance of customer experience. I am polite and professional and I can handle busy environments.",Average
+"I have done some coding in Java and C++ as part of my degree. I am still building my skills but I understand the fundamentals of programming.",Average
+"I have participated in a few hackathons and I enjoy creative problem solving. I have not won anything but I learned a lot and I enjoy the challenge.",Average
+"I have basic knowledge of digital marketing including social media and email. I have managed small campaigns but nothing at a large scale.",Average
+"I have a general understanding of project management and I have helped coordinate small initiatives at my current job. I would like to develop this into a full-time career.",Average
+"I have worked in administration and I am good at organising and prioritising tasks. I am reliable and I always meet my commitments.",Average
+"I have experience in quality assurance testing where I wrote and executed test cases. I found and documented bugs and worked with developers to resolve them.",Average
+"Uh I guess I did some things at my last place. It was okay nothing special. I am not sure what you want me to say here.",Poor
+"I left my last three jobs within six months each time. The environments were not good. I am hoping this one will be different.",Poor
+"I honestly do not know much about this company. I just applied to a lot of places and this one called me back.",Poor
+"I am not great with deadlines. I try but I often end up rushing at the last minute. I am working on it.",Poor
+"I do not really have any specific achievements I can think of. I just did my job and tried to stay out of trouble.",Poor
+"I find it hard to stay motivated when the work is boring. I need to feel engaged or my performance drops.",Poor
+"I have applied to over 50 companies in the past month. I just need something to come through. I am flexible about the role.",Poor
+"I do not handle criticism well. I know that is something I need to work on. It can affect my mood for the rest of the day.",Poor
+"I get nervous in interviews so I am probably not representing myself well right now. I am better in real work situations.",Poor
+"I used to be better at this but I have been out of work for a while and I feel a bit rusty. I hope that is okay.",Poor
+"I built a real-time fraud detection system using gradient boosting that reduced false positives by 45 percent while maintaining 99.2 percent detection accuracy. I deployed it on GCP and it now processes 500000 transactions daily.",Excellent
+"I led the digital transformation of a 200-person company moving all operations to cloud-based tools. This reduced IT costs by 60 percent and improved cross-team collaboration significantly. I managed the change with comprehensive training programmes.",Excellent
+"I developed a predictive maintenance model for manufacturing equipment that reduced unplanned downtime by 35 percent. The model uses sensor data and XGBoost classification. It is now used across all five plants.",Excellent
+"I created an automated reporting system that replaced 40 hours of manual work per week across the finance team. I built it using Python and connected it to our ERP system. The team now focuses on analysis rather than data gathering.",Excellent
+"I led a product from zero to 50000 active users in 18 months. I defined the product roadmap ran user research and worked closely with engineering to prioritise features. Retention at 6 months was 68 percent.",Excellent
+"I have a good attitude and I am willing to learn. I do not have much experience yet but I am motivated and I show up on time and put in the effort.",Average
+"I have been doing this type of work for about a year. I am still getting comfortable with everything but I am improving. I think I just need more time and experience.",Average
+"I have some knowledge of the tools used in this role. I have not used all of them professionally but I have experimented with them on my own.",Average
+"I contributed to a few team projects and I did my part. I am not a leader yet but I am reliable and I support my teammates.",Average
+"I have a degree that is somewhat related to this field. I did not specialise in this area but I believe my general skills are transferable.",Average
+"Basically I am just looking for any job right now. This seemed okay so I applied. I do not know much about what you do here.",Poor
+"I think I am maybe okay at this kind of work. I have tried it a couple of times. Not sure how good I am honestly.",Poor
+"I do not really prepare for interviews so I am kind of making this up as I go. I hope that is fine.",Poor
+"I left my last job because it was too stressful and I could not handle it anymore. I needed a break and now I am looking again.",Poor
+"Um so yeah I have done some stuff before. Nothing I can really remember right now. I guess I will figure it out as I go.",Poor
+"I created an automated reporting system that replaced 40 hours of manual work per week across the finance team. I built it using Python and connected it to our ERP system. The team now focuses on analysis rather than data gathering.",Excellent
+"I led a product from zero to 50000 active users in 18 months. I defined the product roadmap ran user research and worked closely with engineering to prioritise features. Retention at 6 months was 68 percent.",Excellent
+"I have a good attitude and I am willing to learn. I do not have much experience yet but I am motivated and I show up on time and put in the effort.",Average
+"I have been doing this type of work for about a year. I am still getting comfortable with everything but I am improving. I think I just need more time and experience.",Average
+"I have some knowledge of the tools used in this role. I have not used all of them professionally but I have experimented with them on my own.",Average
+"I contributed to a few team projects and I did my part. I am not a leader yet but I am reliable and I support my teammates.",Average
+"I have a degree that is somewhat related to this field. I did not specialise in this area but I believe my general skills are transferable.",Average
+"Basically I am just looking for any job right now. This seemed okay so I applied. I do not know much about what you do here.",Poor
+"I think I am maybe okay at this kind of work. I have tried it a couple of times. Not sure how good I am honestly.",Poor
+"I do not really prepare for interviews so I am kind of making this up as I go. I hope that is fine.",Poor
+"I left my last job because it was too stressful and I could not handle it anymore. I needed a break and now I am looking again.",Poor
