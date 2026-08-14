@@ -39,82 +39,38 @@ def check_dependencies() -> list[str]:
     return _check_imports()
 
 
-def record_to_file(
-    duration: int = 20,
-    sample_rate: int = 16000,
-    status_placeholder=None,
-    stop_event: threading.Event | None = None,
-    chunk_secs: float = 1.0,
-) -> tuple[str, str]:
-    """Record audio from the microphone in small chunks and save to a temporary WAV file.
+def record_to_file(audio_bytes: bytes | object, output_path: str | None = None) -> tuple[str, str]:
+    """Write raw audio bytes to disk and return (filepath, error_message).
 
-    Args:
-        duration: total seconds to record
-        sample_rate: sampling rate
-        status_placeholder: optional Streamlit placeholder (st.empty()) to update remaining time
-        stop_event: optional threading.Event to allow early stop
-        chunk_secs: length of each recording chunk in seconds
-    Returns: (filepath, error_message)
+    This replaces the previous hardware-backed recorder and accepts raw bytes
+    coming from `st.audio_input()` in Streamlit (which provides a file-like
+    object with a `.read()` method). If `output_path` is None a temporary file
+    with a `.wav` suffix will be created.
+
+    Returns a tuple `(filepath, error_message)` where `error_message` is an
+    empty string on success.
     """
-    missing = check_dependencies()
-    if missing:
-        return "", ", ".join(missing)
-
     try:
-        import sounddevice as sd
-        import soundfile as sf
+        # Normalize input: accept bytes or a file-like object
+        if hasattr(audio_bytes, "read"):
+            data = audio_bytes.read()
+        else:
+            data = audio_bytes
+
+        if not data:
+            return "", "No audio data provided."
+
+        if output_path is None:
+            fd, output_path = tempfile.mkstemp(prefix="interview_voice_", suffix=".wav")
+            os.close(fd)
+
+        # Write raw bytes to disk
+        with open(output_path, "wb") as f:
+            f.write(data)
+
+        return output_path, ""
     except Exception as exc:
-        return "", f"Recording backend error: {exc}"
-
-    try:
-        if duration <= 0:
-            duration = 20
-
-        audio_chunks = []
-        elapsed = 0.0
-
-        while elapsed < duration and not (stop_event is not None and stop_event.is_set()):
-            remaining = min(chunk_secs, duration - elapsed)
-            if status_placeholder is not None:
-                try:
-                    status_placeholder.markdown(
-                        f'<div class="s-recording">Recording... {int(duration - elapsed)} seconds remaining</div>',
-                        unsafe_allow_html=True,
-                    )
-                except Exception:
-                    pass
-
-            chunk = sd.rec(
-                int(remaining * sample_rate),
-                samplerate=sample_rate,
-                channels=1,
-                dtype="float32",
-            )
-            sd.wait()
-            if chunk.ndim > 1:
-                chunk = chunk.flatten()
-            audio_chunks.append(chunk)
-            elapsed += remaining
-
-        if status_placeholder is not None:
-            try:
-                status_placeholder.markdown(
-                    '<div class="s-ok">Recording complete.</div>',
-                    unsafe_allow_html=True,
-                )
-            except Exception:
-                pass
-
-        audio = np.concatenate(audio_chunks) if audio_chunks else np.array([], dtype="float32")
-        if audio.size == 0:
-            return "", "No audio was captured. Please try again."
-
-        fd, filepath = tempfile.mkstemp(prefix="interview_voice_", suffix=".wav")
-        os.close(fd)
-        sf.write(filepath, audio, samplerate=sample_rate)
-        return filepath, ""
-    except Exception as exc:
-        return "", f"Recording error: {exc}"
+        return "", f"Recording write error: {exc}"
 
 
 def transcribe_file(filepath: str, language: str = None) -> tuple[str, str]:

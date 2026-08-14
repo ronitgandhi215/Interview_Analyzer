@@ -266,49 +266,52 @@ with col_ans:
                 c1,c2 = st.columns(2)
                 with c1:
                     st.markdown('<div class="field-label">Language</div>', unsafe_allow_html=True)
-                    lang_label = st.selectbox("", list(LANG_OPTIONS.keys()), label_visibility="collapsed", key="vlang")
+                    # Provide a hidden descriptive label for accessibility
+                    lang_label = st.selectbox("Recording language (hidden)", list(LANG_OPTIONS.keys()), label_visibility="collapsed", key="vlang")
                     lang_code = LANG_OPTIONS[lang_label]
                 with c2:
                     st.markdown('<div class="field-label">Duration (seconds)</div>', unsafe_allow_html=True)
-                    duration = st.select_slider("", [10,15,20,30,45,60], value=15, label_visibility="collapsed", key="vdur")
+                    duration = st.select_slider("Recording duration (hidden)", [10,15,20,30,45,60], value=15, label_visibility="collapsed", key="vdur")
                 st.markdown("<br>", unsafe_allow_html=True)
+
+                # Display transcript area and status
                 if st.session_state.voice_transcript:
                     st.markdown(f'<div class="transcript-box">{st.session_state.voice_transcript}</div>', unsafe_allow_html=True)
                     wc_v = len(st.session_state.voice_transcript.split())
                     st.markdown(f'<div class="word-count">{wc_v} words captured</div>', unsafe_allow_html=True)
                 else:
                     st.markdown('<div class="transcript-box transcript-empty">Your transcribed speech will appear here after recording.</div>', unsafe_allow_html=True)
+
                 if st.session_state.voice_status:
                     css = {"recording":"s-recording","transcribing":"s-recording","ok":"s-ok","err":"s-err"}.get(st.session_state.voice_status_type,"s-err")
                     prefix = '<span class="rec-dot"></span>' if st.session_state.voice_status_type in ("recording","transcribing") else ""
                     st.markdown(f'<div class="{css}">{prefix}{st.session_state.voice_status}</div>', unsafe_allow_html=True)
+
                 st.markdown("<br>", unsafe_allow_html=True)
-                # placeholder for a simple countdown timer during recording
-                timer_placeholder = st.empty()
-                if st.session_state.phase == "idle":
-                    b1,b2 = st.columns([3,1])
-                    with b1:
-                        if st.button("Record answer", key="rec_btn", use_container_width=True):
-                            st.session_state.voice_status = f"Recording {duration}s — speak now..."
-                            st.session_state.voice_status_type = "recording"
-                            # pass the placeholder so the recorder can update remaining time
-                            with st.spinner(f"Recording {duration}s..."):
-                                filepath, err = record_to_file(duration, status_placeholder=timer_placeholder)
-                            # clear timer UI after recording
-                            try:
-                                timer_placeholder.empty()
-                            except Exception:
-                                pass
-                            if err:
-                                st.session_state.voice_status=err; st.session_state.voice_status_type="err"; st.session_state.audio_filepath=None; st.session_state.phase="idle"
-                            else:
-                                st.session_state.audio_filepath=filepath; st.session_state.voice_status="Recording done. Click Transcribe."; st.session_state.voice_status_type="ok"; st.session_state.phase="recorded"
-                            st.rerun()
-                    with b2:
-                        if st.button("Clear",key="clr_btn"):
-                            for k in ["voice_transcript","voice_status","voice_status_type"]: st.session_state[k]=""
-                            st.session_state.audio_filepath=None; st.session_state.phase="idle"; st.rerun()
-                elif st.session_state.phase == "recorded":
+
+                # Use Streamlit's browser-based recorder (st.audio_input) instead of local sounddevice
+                st.markdown('<div class="field-label">Record your answer</div>', unsafe_allow_html=True)
+                audio_file = st.audio_input("Record your answer:", key="audio_input")
+
+                if audio_file is not None and st.session_state.phase == "idle":
+                    # Save the uploaded audio bytes to a temporary file that transcribe_file can read
+                    st.session_state.voice_status = "Saving recording..."
+                    st.session_state.voice_status_type = "recording"
+                    with st.spinner("Saving recording..."):
+                        filepath, err = record_to_file(audio_file)
+                    if err:
+                        st.session_state.voice_status = err
+                        st.session_state.voice_status_type = "err"
+                        st.session_state.audio_filepath = None
+                        st.session_state.phase = "idle"
+                    else:
+                        st.session_state.audio_filepath = filepath
+                        st.session_state.voice_status = "Recording saved. Click Transcribe."
+                        st.session_state.voice_status_type = "ok"
+                        st.session_state.phase = "recorded"
+                        st.experimental_rerun()
+
+                if st.session_state.phase == "recorded":
                     b1,b2,b3 = st.columns([2,2,1])
                     with b1:
                         if st.button("Transcribe",key="tx_btn",use_container_width=True):
@@ -338,9 +341,10 @@ with col_ans:
                         if st.button("Clear",key="clr3_btn"):
                             for k in ["voice_transcript","voice_status","voice_status_type"]: st.session_state[k]=""
                             st.session_state.audio_filepath=None; st.session_state.phase="idle"; st.rerun()
+
                 if st.session_state.voice_transcript:
                     with st.expander("Edit transcript"):
-                        edited=st.text_area("",value=st.session_state.voice_transcript,height=100,label_visibility="collapsed",key="edit_tx")
+                        edited=st.text_area("Edit transcript (hidden)",value=st.session_state.voice_transcript,height=100,label_visibility="collapsed",key="edit_tx")
                         if st.button("Save edits",key="save_edit"): st.session_state.voice_transcript=edited; st.rerun()
                 user_answer = st.session_state.voice_transcript
 
