@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+*.pkl
+.DS_Store
+.env
+*.wav
+.record_result.json
+history.json
+*.egg-info/
+dist/
+build/
