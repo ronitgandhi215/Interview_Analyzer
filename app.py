@@ -197,11 +197,24 @@ if not is_model_trained():
 col_q, col_ans = st.columns([1, 1.3], gap="large")
 with col_q:
     st.markdown('<div class="field-label">Question category</div>', unsafe_allow_html=True)
-    category = st.selectbox("", options=list(QUESTION_CATEGORIES.keys()), index=list(QUESTION_CATEGORIES.keys()).index(st.session_state.question_category), label_visibility="collapsed", key="question_category")
+    category = st.selectbox(
+    "Select Question Category",  # <-- Add a descriptive label here
+    options=list(QUESTION_CATEGORIES.keys()), 
+    index=list(QUESTION_CATEGORIES.keys()).index(st.session_state.question_category), 
+    label_visibility="collapsed", 
+    key="question_category"
+)
+
 
     st.markdown('<div class="field-label">Pick a sample question</div>', unsafe_allow_html=True)
     question_options = QUESTION_CATEGORIES.get(category, []) + ["Custom question..."]
-    selected_q = st.selectbox("", options=question_options, label_visibility="collapsed", key="question_select")
+    selected_q = st.selectbox(
+    "Select Specific Question",  # <-- Add a descriptive label here
+    options=question_options, 
+    label_visibility="collapsed", 
+    key="question_select"
+)
+
     if selected_q == "Custom question...":
         custom_q = st.text_area("Or enter your own question", value=st.session_state.custom_question, height=100, key="custom_question")
         st.session_state.custom_question = custom_q
