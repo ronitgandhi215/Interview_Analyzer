@@ -281,7 +281,7 @@ with col_ans:
                         st.session_state.voice_status = "Recording saved. Click Transcribe."
                         st.session_state.voice_status_type = "ok"
                         st.session_state.phase = "recorded"
-                        st.experimental_rerun()
+                        st.rerun()
 
                 if st.session_state.phase == "recorded":
                     b1,b2,b3 = st.columns([2,2,1])
@@ -292,6 +292,10 @@ with col_ans:
                                 text, err = transcribe_file(st.session_state.audio_filepath, lang_code)
                             if err:
                                 st.session_state.voice_status=err; st.session_state.voice_status_type="err"; st.session_state.phase="idle"
+                                try:
+                                    st.error(f"Transcription failed: {err}")
+                                except Exception:
+                                    pass
                             else:
                                 existing=st.session_state.voice_transcript.strip()
                                 st.session_state.voice_transcript=(existing+" "+text if existing else text)

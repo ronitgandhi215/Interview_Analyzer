@@ -15,6 +15,7 @@ import os
 import tempfile
 import threading
 import numpy as np
+import streamlit as st
 
 # ── Lazy imports so app doesn't crash if libs missing ─────────────────────────
 def _check_imports():
@@ -52,6 +53,12 @@ def record_to_file(audio_bytes: bytes | object, output_path: str | None = None) 
     """
     try:
         # Normalize input: accept bytes or a file-like object
+        if hasattr(audio_bytes, "seek"):
+            try:
+                audio_bytes.seek(0)
+            except Exception:
+                pass
+
         if hasattr(audio_bytes, "read"):
             data = audio_bytes.read()
         else:
@@ -86,12 +93,15 @@ def transcribe_file(filepath: str, language: str = None) -> tuple[str, str]:
         import soundfile as sf
     except Exception as exc:
         return "", f"Transcription backend error: {exc}"
-
     try:
         audio, sample_rate = sf.read(filepath, dtype="float32")
         if audio.ndim > 1:
             audio = np.mean(audio, axis=1)
-        return _transcribe_audio(audio, language), ""
+        try:
+            text = _transcribe_audio(audio, language)
+            return text, ""
+        except Exception as exc:
+            return "", f"Transcription failed: {exc}"
     except Exception as exc:
         return "", f"Transcription error: {exc}"
 
@@ -117,6 +127,7 @@ def list_microphones() -> list:
 # ── Whisper model — loaded once and cached ─────────────────────────────────────
 _whisper_model = None
 
+@st.cache_resource
 def _get_model():
     global _whisper_model
     if _whisper_model is None:
