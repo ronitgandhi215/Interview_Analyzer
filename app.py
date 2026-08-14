@@ -148,6 +148,22 @@ for k,v in DEFAULTS.items():
         st.session_state[k] = v
 
 
+def clear_response_callback():
+    """Safely clear text response and related voice state from session_state.
+
+    This avoids assigning directly to a widget-managed key during widget
+    construction which raises StreamlitAPIException in newer Streamlit
+    versions.
+    """
+    st.session_state.typed_answer = ""
+    # clear related voice fields as before
+    st.session_state.voice_transcript = ""
+    st.session_state.voice_status = ""
+    st.session_state.voice_status_type = ""
+    st.session_state.audio_filepath = None
+    st.session_state.phase = "idle"
+
+
 def _save_history(entry: dict):
     st.session_state.history.append(entry)
     st.session_state.history_saved = True
@@ -227,15 +243,10 @@ with col_ans:
         user_answer = st.text_area("", height=200, placeholder="Write your answer here...", label_visibility="collapsed", key="typed_answer")
         wc = len(user_answer.split()) if user_answer.strip() else 0
         st.markdown(f'<div class="word-count">{wc} words</div>', unsafe_allow_html=True)
-        if st.button("Clear answer", key="clear_text", use_container_width=True):
-            st.session_state.typed_answer = ""
-            st.session_state.voice_transcript = ""
-            st.session_state.voice_status = ""
-            st.session_state.voice_status_type = ""
-            st.session_state.audio_filepath = None
-            st.session_state.phase = "idle"
-            st.experimental_rerun()
-        else:
+        # Use on_click callback to safely clear widget-managed session keys
+        st.button("Clear answer", key="clear_text", use_container_width=True, on_click=clear_response_callback)
+
+    else:
                 c1,c2 = st.columns(2)
                 with c1:
                     st.markdown('<div class="field-label">Language</div>', unsafe_allow_html=True)
