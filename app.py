@@ -142,6 +142,7 @@ DEFAULTS = {
     "question_category": "General",
     "custom_question": "",
     "typed_answer": "",
+    "recording_version": 0,
 }
 for k,v in DEFAULTS.items():
     if k not in st.session_state:
@@ -252,9 +253,6 @@ with col_ans:
                     st.markdown('<div class="field-label">Language</div>', unsafe_allow_html=True)
                     lang_label = st.selectbox("Recording language (hidden)", list(LANG_OPTIONS.keys()), label_visibility="collapsed", key="vlang")
                     lang_code = LANG_OPTIONS[lang_label]
-                with c2:
-                    st.markdown('<div class="field-label">Duration (seconds)</div>', unsafe_allow_html=True)
-                    duration = st.select_slider("Recording duration (hidden)", [10,15,20,30,45,60], value=15, label_visibility="collapsed", key="vdur")
                 st.markdown("<br>", unsafe_allow_html=True)
 
                 # Display transcript area and status
@@ -272,67 +270,60 @@ with col_ans:
 
                 st.markdown("<br>", unsafe_allow_html=True)
 
-                # Use Streamlit's browser-based recorder (st.audio_input)
+                # Use Streamlit's browser-based recorder (st.audio_input) with key-cycling
                 st.markdown('<div class="field-label">Record your answer</div>', unsafe_allow_html=True)
-                audio_file = st.audio_input("Record your answer:", key="audio_input")
+                audio_key = f"audio_recorder_{st.session_state.recording_version}"
+                audio_data = st.audio_input("Record your answer:", key=audio_key)
 
-                if audio_file is not None and st.session_state.phase == "idle":
-                    # Save the uploaded audio bytes to a temporary file that transcribe_file can read
+                # Record again button: increments the recording_version to force a new widget
+                if st.button("Record again", key="record_again", use_container_width=True):
+                    st.session_state.recording_version = st.session_state.get("recording_version", 0) + 1
+                    # clear previous recording/transcript state
+                    st.session_state.voice_transcript = ""
+                    st.session_state.voice_status = ""
+                    st.session_state.voice_status_type = ""
+                    st.session_state.audio_filepath = None
+                    st.rerun()
+
+                # When audio is provided by the browser widget, save and offer Transcribe only.
+                if audio_data is not None:
                     st.session_state.voice_status = "Saving recording..."
                     st.session_state.voice_status_type = "recording"
                     with st.spinner("Saving recording..."):
-                        filepath, err = record_to_file(audio_file)
+                        filepath, err = record_to_file(audio_data)
                     if err:
                         st.session_state.voice_status = err
                         st.session_state.voice_status_type = "err"
                         st.session_state.audio_filepath = None
-                        st.session_state.phase = "idle"
                     else:
                         st.session_state.audio_filepath = filepath
                         st.session_state.voice_status = "Recording saved. Click Transcribe."
                         st.session_state.voice_status_type = "ok"
-                        st.session_state.phase = "recorded"
-                        st.rerun()
 
-                if st.session_state.phase == "recorded":
-                    b1,b2,b3 = st.columns([2,2,1])
-                    with b1:
-                        if st.button("Transcribe",key="tx_btn",use_container_width=True):
-                            st.session_state.voice_status="Transcribing..."; st.session_state.voice_status_type="transcribing"
-                            with st.spinner("Transcribing..."):
-                                text, err = transcribe_file(st.session_state.audio_filepath, lang_code)
-                            if err:
-                                st.session_state.voice_status=err; st.session_state.voice_status_type="err"; st.session_state.phase="idle"
-                                try:
-                                    st.error(f"Transcription failed: {err}")
-                                except Exception:
-                                    pass
-                            else:
-                                existing=st.session_state.voice_transcript.strip()
-                                st.session_state.voice_transcript=(existing+" "+text if existing else text)
-                                st.session_state.voice_status=f"Done — {len(text.split())} words captured."; st.session_state.voice_status_type="ok"; st.session_state.audio_filepath=None; st.session_state.phase="done"
-                            st.rerun()
-                    with b2:
-                        if st.button("Record again",key="rec2_btn",use_container_width=True):
-                            st.session_state.audio_filepath=None; st.session_state.voice_status=""; st.session_state.phase="idle"; st.rerun()
-                    with b3:
-                        if st.button("Clear",key="clr2_btn"):
-                            for k in ["voice_transcript","voice_status","voice_status_type"]: st.session_state[k]=""
-                            st.session_state.audio_filepath=None; st.session_state.phase="idle"; st.rerun()
-                elif st.session_state.phase == "done":
-                    b1,b2 = st.columns([3,1])
-                    with b1:
-                        if st.button("Record more",key="rec3_btn",use_container_width=True):
-                            st.session_state.voice_status=""; st.session_state.phase="idle"; st.rerun()
-                    with b2:
-                        if st.button("Clear",key="clr3_btn"):
-                            for k in ["voice_transcript","voice_status","voice_status_type"]: st.session_state[k]=""
-                            st.session_state.audio_filepath=None; st.session_state.phase="idle"; st.rerun()
+                    # Only show Transcribe button below the recorder
+                    if st.button("Transcribe", key="tx_btn", use_container_width=True):
+                        st.session_state.voice_status = "Transcribing..."
+                        st.session_state.voice_status_type = "transcribing"
+                        with st.spinner("Transcribing..."):
+                            text, err = transcribe_file(st.session_state.audio_filepath, lang_code)
+                        if err:
+                            st.session_state.voice_status = err
+                            st.session_state.voice_status_type = "err"
+                            try:
+                                st.error(f"Transcription failed: {err}")
+                            except Exception:
+                                pass
+                        else:
+                            existing = st.session_state.voice_transcript.strip()
+                            st.session_state.voice_transcript = (existing + " " + text) if existing else text
+                            st.session_state.voice_status = f"Done — {len(text.split())} words captured."
+                            st.session_state.voice_status_type = "ok"
+                            st.session_state.audio_filepath = None
 
                 if st.session_state.voice_transcript:
                     with st.expander("Edit transcript"):
-                        edited=st.text_area("Edit transcript (hidden)",value=st.session_state.voice_transcript,height=100,label_visibility="collapsed",key="edit_tx")
-                        if st.button("Save edits",key="save_edit"): st.session_state.voice_transcript=edited; st.rerun()
+                        edited = st.text_area("Edit transcript (hidden)", value=st.session_state.voice_transcript, height=100, label_visibility="collapsed", key="edit_tx")
+                        if st.button("Save edits", key="save_edit"): st.session_state.voice_transcript = edited; st.rerun()
                 user_answer = st.session_state.voice_transcript
 
 # Analyze button
