@@ -19,11 +19,7 @@ from utils.communication_scorer import compute_communication_score
 from utils.feedback_generator   import generate_feedback
 from model.predictor            import predict_quality, is_model_trained
 
-try:
-    from utils.voice_input import record_to_file, transcribe_file, check_dependencies, is_microphone_available
-    VOICE_AVAILABLE = True
-except ImportError:
-    VOICE_AVAILABLE = False
+from utils.voice_input import record_to_file, transcribe_file
 
 st.set_page_config(page_title="Interview Analyzer", page_icon="", layout="wide", initial_sidebar_state="collapsed")
 
@@ -37,17 +33,8 @@ with st.sidebar:
     )
     st.markdown("---")
     st.markdown("## Voice setup")
-    if VOICE_AVAILABLE:
-        missing = check_dependencies()
-        if missing:
-            st.warning(f"Missing voice packages: {', '.join(missing)}")
-            st.write("Install with: `pip install sounddevice soundfile faster-whisper`")
-        else:
-            st.success("Voice features are available.")
-            st.write("Make sure a microphone is connected before recording.")
-    else:
-        st.warning("Voice backend is not loaded. Install voice dependencies to enable it.")
-        st.write("pip install sounddevice soundfile faster-whisper")
+    st.write("Recording uses your browser microphone via the built-in recorder. No server-side sound card is required.")
+    st.write("Transcription runs on the server — install `faster-whisper` if you want offline transcription. If not installed, the Transcribe step will show an error message.")
     st.markdown("---")
     st.markdown("## New features")
     st.write("• Save and export answer history")
@@ -248,25 +235,10 @@ with col_ans:
             st.session_state.audio_filepath = None
             st.session_state.phase = "idle"
             st.experimental_rerun()
-    else:
-        missing = []
-        if VOICE_AVAILABLE:
-            missing = check_dependencies()
-
-        if missing:
-            st.markdown(f'<div class="s-err">Missing voice dependencies: {", ".join(missing)}<br>Run: pip install {" ".join(missing)}</div>', unsafe_allow_html=True)
-            user_answer = ""
-        elif not VOICE_AVAILABLE:
-            st.warning("Voice input is not available in this browser session.")
-            user_answer = ""
-        elif not is_microphone_available():
-            st.warning("No usable microphone detected. Connect a mic and refresh the page.")
-            user_answer = ""
         else:
                 c1,c2 = st.columns(2)
                 with c1:
                     st.markdown('<div class="field-label">Language</div>', unsafe_allow_html=True)
-                    # Provide a hidden descriptive label for accessibility
                     lang_label = st.selectbox("Recording language (hidden)", list(LANG_OPTIONS.keys()), label_visibility="collapsed", key="vlang")
                     lang_code = LANG_OPTIONS[lang_label]
                 with c2:
@@ -289,7 +261,7 @@ with col_ans:
 
                 st.markdown("<br>", unsafe_allow_html=True)
 
-                # Use Streamlit's browser-based recorder (st.audio_input) instead of local sounddevice
+                # Use Streamlit's browser-based recorder (st.audio_input)
                 st.markdown('<div class="field-label">Record your answer</div>', unsafe_allow_html=True)
                 audio_file = st.audio_input("Record your answer:", key="audio_input")
 
