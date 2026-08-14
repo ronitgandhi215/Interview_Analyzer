@@ -2,7 +2,7 @@
 
 # Interview Analyzer
 
-**An AI-powered tool that evaluates interview answers (typed or spoken) using NLP heuristics and an ML classifier.**
+**AI-powered interview answer evaluator — type or speak, then get instant NLP + ML feedback.**
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.32%2B-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io)
@@ -11,41 +11,40 @@
 
 <br>
 
-Type or speak your interview answer — get a combined score for sentiment, confidence, and communication quality, plus ML-based quality prediction and actionable feedback.
+Type or speak your answer, edit the transcript, and get a combined score (Sentiment, Confidence, Communication) plus an ML-predicted quality class and actionable feedback.
 
 </div>
 
 ---
 
+## What's new in this release
+
+- Browser-based recording using Streamlit's `st.audio_input` (no server audio hardware required).
+- "Record again" button that resets the recorder so you can re-record from scratch.
+- Automatic population of the main text input after transcription (so you can immediately edit and analyze).
+- Whisper model is cached to avoid reloads and reduce out-of-memory issues in constrained environments.
+- Simplified UI: the app shows only the recorder, `Transcribe`, and `Record again` controls for voice flows.
+
+---
+
 ## Highlights / Features
 
-- Input modes: `Type` or `Speak` (microphone).
-- Voice recording features:
-  - Simple visible countdown timer while recording.
-  - `Stop` button to end early and save captured audio.
-  - `Transcribe` button after recording to run offline Whisper transcription (faster-whisper).
-  - Edit transcript inline before analysis.
-- Improved transcription settings (higher beam size, VAD disabled by default) for better accuracy on short answers.
-- NLP scoring: Sentiment, Confidence, Communication (weighted to form an NLP score).
-- ML scoring: TF-IDF + Logistic Regression predicts quality class (Poor / Average / Good / Excellent) and returns class probabilities.
-- Combined final score and contextual feedback suggestions.
-- Mobile-friendly responsive layout and polished UI styling.
-
-Note: The on-screen "Save to history" button was removed in this release; helper functions remain in the codebase if you want to re-enable persistent history later.
+- Input modes: `Type` or `Speak`.
+- Browser recorder: `st.audio_input` (works in modern browsers; no server soundcard needed).
+- Record again: clears previous recording and gives a fresh recorder instance.
+- Transcribe: server-side transcription with `faster-whisper` (optional). Transcribed text is inserted into the main text area automatically.
+- Edit transcript inline before analysis.
+- NLP scoring (Sentiment, Confidence, Communication) and ML prediction (TF-IDF + Logistic Regression).
+- Clean, mobile-friendly UI and exportable history (optional).
 
 ---
 
 ## Quick Start
 
-Follow these steps to run locally and test the app.
-
 ### Prerequisites
 
 - Python 3.9 or later
 - `pip`
-- (Optional, for voice) system PortAudio headers:
-  - macOS: `brew install portaudio`
-  - Ubuntu: `sudo apt-get install libportaudio2 portaudio19-dev`
 
 ### Install & run
 
@@ -58,102 +57,84 @@ venv\Scripts\activate    # Windows
 pip install -r requirements.txt
 ```
 
-If you plan to use offline voice transcription, also install the voice dependencies:
+If you want offline transcription using Whisper (`faster-whisper`), install the optional packages:
 
 ```bash
-pip install sounddevice soundfile faster-whisper
+pip install faster-whisper soundfile
 ```
 
-Finally, run the app with:
+Run the app:
 
 ```bash
 streamlit run app.py
 ```
 
-Open the URL printed by Streamlit (usually http://localhost:8501).
+Open the URL printed by Streamlit (typically http://localhost:8501).
 
 ---
 
-## Voice Input Details
+## Voice Input — How to use
 
-- Recording flow:
-  1. Choose `Speak` mode, select language and duration.
-  2. Click `Record` — a countdown shows remaining seconds.
-  3. Click `Stop` any time to finish early or wait until the countdown ends.
-  4. Click `Transcribe` to convert the saved audio into text.
-  5. Use `Edit transcript` to refine text before analysis.
+1. Choose `Speak` mode in the UI and pick the language.
+2. Click the recorder widget to start speaking (browser will ask microphone permission).
+3. When done, click the pause/stop control on the recorder; the app saves the audio.
+4. Click `Transcribe` to convert the saved audio to text (server-side). On success the text is automatically placed in the main text area for editing.
+5. If you want to re-record from scratch, click `Record again` — the recorder resets and previous audio/transcript is cleared.
 
-- Implementation notes:
-  - Recording uses `sounddevice` and writes WAV files via `soundfile`.
-  - Transcription runs locally with `faster-whisper` (Whisper model). Default settings favour accuracy (larger beam size) and avoid aggressive VAD filtering that may drop words in short responses.
-  - If your environment cannot access a microphone or dependencies are missing, the UI will display a clear warning and instructions.
+Notes:
+
+- `st.audio_input` provides a simple browser-native recording experience — no server sound hardware or PortAudio is required.
+- If `faster-whisper` is not installed, the Transcribe step will show an error explaining how to enable offline transcription.
 
 ---
 
-## Analysis & Scoring
+## Analysis & Scoring (brief)
 
-- NLP Score (55% weight in final score):
-  - Sentiment (30%) — tone and valence
-  - Confidence (40%) — filler words, hedging, assertiveness
-  - Communication (30%) — grammar, vocabulary, readability
-
-- ML Score (45% weight):
-  - TF-IDF + Logistic Regression predicts class probabilities and a predicted label.
-
-- Final score = weighted combination of NLP and ML scores; app maps to grade buckets (Excellent / Good / Fair / Needs Work).
+- NLP Score (weighted): Sentiment (30%), Confidence (40%), Communication (30%).
+- ML Score: TF-IDF + Logistic Regression returns class probabilities and predicted label.
+- Final score: weighted combination of NLP + ML scores, mapped to grade buckets (Excellent / Good / Fair / Needs Work).
 
 ---
 
 ## Model Training
 
-To retrain or improve the ML model:
+To retrain the ML classifier:
 
 ```bash
 python model/train_model.py
 ```
 
-Training reads `data/training_data.csv` (format: `answer,label`) and writes model artifacts to `model/`.
+Training reads `data/training_data.csv` and writes model artifacts to `model/`.
 
 ---
 
 ## Troubleshooting
 
-- `ModuleNotFoundError: No module named 'streamlit'` — install dependencies and activate the correct virtual environment.
-- Microphone not detected — ensure OS permissions allow microphone access and that `sounddevice` lists input devices.
-- If transcription is noisy:
-  - Try switching to a larger Whisper model in `utils/voice_input.py` (e.g., `base` or `small`) if you have CPU/RAM budget.
-  - Reduce background noise and speak clearly close to the mic.
+- If Streamlit isn't found: ensure your virtual environment is activated and `pip install -r requirements.txt` completed.
+- If the browser recorder doesn't appear or microphone permission is denied: check browser permissions and try a different browser (Chrome/Edge/Firefox recommended).
+- If transcription is noisy or slow: install `faster-whisper` and try a different Whisper model size (tiny → small → base) depending on CPU/RAM.
 
 ---
 
 ## Files of interest
 
 - `app.py` — Streamlit UI and control flow (record → transcribe → edit → analyze)
-- `utils/voice_input.py` — recording + transcription helpers (supports chunked recording, stop events, and status updates)
-- `model/train_model.py` — training pipeline for TF-IDF + Logistic Regression
-- `model/predictor.py` — model loading and `predict_quality()` API used by the app
+- `utils/voice_input.py` — transcription helpers and model caching
+- `model/train_model.py` — training pipeline and artifacts
 
 ---
 
-## Requirements (important)
-
-Minimum packages for core app (non-voice):
+## Requirements (core)
 
 ```
 streamlit>=1.32.0
 scikit-learn>=1.4.0
 pandas>=2.0.0
 plotly>=5.20.0
-nltk>=3.8.1
-textblob>=0.18.0
-```
 
-Optional voice/transcription packages:
-
-```
-sounddevice
-soundfile
+Optional for offline transcription:
 faster-whisper
+soundfile
 ```
 
 ---
@@ -162,9 +143,9 @@ faster-whisper
 
 1. Fork the repo
 2. Create a branch: `git checkout -b feature/your-feature`
-3. Commit and push, then open a PR
+3. Commit, push, and open a PR
 
-Contributions: more labeled training data, multi-language support, better NLP features, or a progress tracker.
+Ideas: improve multi-language support, add CI checks, expand labelled dataset for the ML model.
 
 ---
 
@@ -174,6 +155,6 @@ This project is licensed under MIT. See [LICENSE](LICENSE).
 
 ---
 
-Built as an MLA Mini Project · Streamlit · scikit-learn · faster-whisper
+Built with Streamlit · scikit-learn · faster-whisper
 
 ⭐ Star the repo if it helped you

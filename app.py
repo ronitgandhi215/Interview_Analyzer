@@ -316,9 +316,15 @@ with col_ans:
                         else:
                             existing = st.session_state.voice_transcript.strip()
                             st.session_state.voice_transcript = (existing + " " + text) if existing else text
+                            # Populate the main text input with the transcribed text
+                            st.session_state.typed_answer = text
+                            # Switch to typing mode so the main text area is visible
+                            st.session_state.input_mode = "type"
                             st.session_state.voice_status = f"Done — {len(text.split())} words captured."
                             st.session_state.voice_status_type = "ok"
                             st.session_state.audio_filepath = None
+                            # Rerun so the UI redraws and the text area shows the transcribed text
+                            st.rerun()
 
                 if st.session_state.voice_transcript:
                     with st.expander("Edit transcript"):
