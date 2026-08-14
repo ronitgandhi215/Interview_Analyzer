@@ -4,32 +4,32 @@ MLA INTERVIEW QUALITY CLASSIFIER — EVALUATION REPORT
 Algorithm  : Logistic Regression (One-vs-Rest)
 Features   : TF-IDF Vectorizer (unigrams + bigrams, top 2000)
 Classes    : ['Poor', 'Average', 'Good', 'Excellent']
-Dataset    : 109 labelled samples
+Dataset    : 120 labelled samples
 Split      : 80% train / 20% test
 
 CROSS-VALIDATION (5-fold stratified)
-CV Accuracy : 0.781 (+/- 0.208)
-Per-fold    : [np.float64(0.682), np.float64(0.682), np.float64(0.909), np.float64(0.727), np.float64(0.905)]
+CV Accuracy : 0.775 (+/- 0.163)
+Per-fold    : [0.917, 0.792, 0.75, 0.75, 0.667]
 
 TEST SET RESULTS
-Test Accuracy: 0.773
+Test Accuracy: 0.833
 
 Classification Report:
               precision    recall  f1-score   support
 
-        Poor      0.714     0.833     0.769         6
+        Poor      0.857     0.857     0.857         7
      Average      0.800     0.800     0.800         5
-        Good      0.667     0.400     0.500         5
-   Excellent      0.857     1.000     0.923         6
+        Good      0.750     0.600     0.667         5
+   Excellent      0.875     1.000     0.933         7
 
-    accuracy                          0.773        22
-   macro avg      0.760     0.758     0.748        22
-weighted avg      0.762     0.773     0.757        22
+    accuracy                          0.833        24
+   macro avg      0.821     0.814     0.814        24
+weighted avg      0.828     0.833     0.828        24
 
 
 Confusion Matrix (rows=actual, cols=predicted):
 Classes: ['Poor', 'Average', 'Good', 'Excellent']
-[[5 0 0 1]
+[[6 0 0 1]
  [0 4 1 0]
- [2 1 2 0]
- [0 0 0 6]]
+ [1 1 3 0]
+ [0 0 0 7]]
